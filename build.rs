@@ -15,7 +15,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             build_unix()?
         }
     }
-    println!("Exit succesful");
 
     Ok(())
 }
@@ -23,7 +22,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 fn copy_tcl_dir() -> anyhow::Result<()> {
     let out_dir = env::var("OUT_DIR")?;
     Command::new("cp")
-        .args(["-lRf", "tcl8.6.12/", &out_dir])
+        .args(["-Rf", "tcl8.6.12/", &out_dir])
         .status()
         .expect("Failed to execute process");
 
@@ -32,17 +31,33 @@ fn copy_tcl_dir() -> anyhow::Result<()> {
 
 fn build_unix() -> anyhow::Result<()> {
     let out_dir = env::var("OUT_DIR")?;
+    let work_dir = "tcl8.6.12/unix";
     eprintln!("{}", out_dir);
-    let command = fs::canonicalize(format!("{}/tcl8.6.12/unix/configure", out_dir))?;
+    let command = fs::canonicalize(format!("{}/{}/configure", out_dir, work_dir))?;
     eprintln!("canonicsed");
     eprintln!("{:?}", command);
     let output = Command::new(command)
         .arg(format!("--prefix={}", out_dir))
         .arg("--enable-share=no")
-        .current_dir(format!("{}/unix", out_dir))
+        .current_dir(format!("{}/{}", out_dir, work_dir))
         .output()
         .expect("Failed to execute process");
 
     println!("{}", String::from_utf8(output.stderr).unwrap());
+
+    let output = Command::new("make")
+        .arg(format!("--jobs={}", num_cpus::get()))
+        .current_dir(format!("{}/{}", out_dir, work_dir))
+        .output()
+        .expect("Failed to execute process");
+    println!("{}", String::from_utf8(output.stderr).unwrap());
+
+    let output = Command::new("make")
+        .arg("install")
+        .current_dir(format!("{}/{}", out_dir, work_dir))
+        .output()
+        .expect("Failed to execute process");
+    println!("{}", String::from_utf8(output.stderr).unwrap());
+
     Ok(())
 }

@@ -9,5 +9,6 @@ edition = "2021"
 
 [build-dependencies]
 anyhow = "1.0"
+num_cpus = "1.13.1"
 #cc = { version = "1.0.73", features = ["parallel"] }
 pkg-config = "0.3.25"
