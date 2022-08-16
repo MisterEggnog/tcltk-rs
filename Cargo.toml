@@ -6,3 +6,8 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+
+[build-dependencies]
+anyhow = "1.0"
+#cc = { version = "1.0.73", features = ["parallel"] }
+pkg-config = "0.3.25"
