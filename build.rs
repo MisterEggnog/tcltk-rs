@@ -1,3 +1,4 @@
+use jobserver::Client;
 use pkg_config::Config;
 use std::env;
 use std::fs;
@@ -59,9 +60,11 @@ fn build_unix() -> anyhow::Result<()> {
     let out_dir = env::var("OUT_DIR")?;
     let work_dir = "tcl8.6.12/unix";
     eprintln!("{}", out_dir);
+    let jobserver = unsafe { Client::from_env().unwrap() };
 
-    let output = Command::new("make")
-        .arg(format!("--jobs={}", num_cpus::get()))
+    let mut cmd = Command::new("make");
+    jobserver.configure(&mut cmd);
+    let output = cmd
         .current_dir(format!("{}/{}", out_dir, work_dir))
         .output()
         .expect("Failed to execute process");
