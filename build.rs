@@ -1,6 +1,8 @@
 use pkg_config::Config;
 use std::env;
 use std::fs;
+use std::fs::File;
+use std::path::Path;
 use std::process::Command;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -11,7 +13,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         Ok(_) => panic!("This has never worked before"),
         Err(_) => {
             copy_tcl_dir()?;
-            eprintln!("Copied dir");
+            configure_unix()?;
             build_unix()?
         }
     }
@@ -33,17 +35,6 @@ fn build_unix() -> anyhow::Result<()> {
     let out_dir = env::var("OUT_DIR")?;
     let work_dir = "tcl8.6.12/unix";
     eprintln!("{}", out_dir);
-    let command = fs::canonicalize(format!("{}/{}/configure", out_dir, work_dir))?;
-    eprintln!("canonicsed");
-    eprintln!("{:?}", command);
-    let output = Command::new(command)
-        .arg(format!("--prefix={}", out_dir))
-        .arg("--enable-share=no")
-        .current_dir(format!("{}/{}", out_dir, work_dir))
-        .output()
-        .expect("Failed to execute process");
-
-    println!("{}", String::from_utf8(output.stderr).unwrap());
 
     let output = Command::new("make")
         .arg(format!("--jobs={}", num_cpus::get()))
@@ -54,6 +45,31 @@ fn build_unix() -> anyhow::Result<()> {
 
     let output = Command::new("make")
         .arg("install")
+        .current_dir(format!("{}/{}", out_dir, work_dir))
+        .output()
+        .expect("Failed to execute process");
+    println!("{}", String::from_utf8(output.stderr).unwrap());
+
+    Ok(())
+}
+
+fn configure_unix() -> anyhow::Result<()> {
+    let out_dir = env::var("OUT_DIR")?;
+    let configured_file = format!("{}/TCL_SYS_CONFIGURED", out_dir);
+
+    if Path::new(&configured_file).exists() {
+        return Ok(());
+    }
+
+    drop(File::create(configured_file)?);
+
+    let work_dir = "tcl8.6.12/unix";
+    let command = fs::canonicalize(format!("{}/{}/configure", out_dir, work_dir))?;
+    eprintln!("canonicsed");
+    eprintln!("{:?}", command);
+    let output = Command::new(command)
+        .arg(format!("--prefix={}", out_dir))
+        .arg("--enable-share=no")
         .current_dir(format!("{}/{}", out_dir, work_dir))
         .output()
         .expect("Failed to execute process");
