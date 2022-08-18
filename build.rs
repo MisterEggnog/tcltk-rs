@@ -32,6 +32,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         Err(_) => {
             copy_tcl_dir()?;
             configure_unix()?;
+            token_touch()?;
+
             build_unix()?
         }
     }
@@ -40,6 +42,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 }
 
 fn copy_tcl_dir() -> anyhow::Result<()> {
+    if token_exists() {
+        return Ok(());
+    }
+
     let out_dir = env::var("OUT_DIR")?;
     Command::new("cp")
         .args(["-Rf", "tcl8.6.12/", &out_dir])
@@ -75,7 +81,6 @@ fn configure_unix() -> anyhow::Result<()> {
     if token_exists() {
         return Ok(());
     }
-    token_touch()?;
 
     let out_dir = env::var("OUT_DIR")?;
     let work_dir = "tcl8.6.12/unix";
