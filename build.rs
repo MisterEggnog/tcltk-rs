@@ -2,8 +2,26 @@ use pkg_config::Config;
 use std::env;
 use std::fs;
 use std::fs::File;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 use std::process::Command;
+
+fn token_name() -> PathBuf {
+    [
+        env::var("OUT_DIR").unwrap(),
+        "TCL_SYS_CONFIGURED".to_string(),
+    ]
+    .iter()
+    .collect()
+}
+
+fn token_exists() -> bool {
+    Path::new(&token_name()).exists()
+}
+
+fn token_touch() -> anyhow::Result<()> {
+    File::create(token_name())?;
+    Ok(())
+}
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("cargo:rerun-if-changed=build.rs");
@@ -54,15 +72,12 @@ fn build_unix() -> anyhow::Result<()> {
 }
 
 fn configure_unix() -> anyhow::Result<()> {
-    let out_dir = env::var("OUT_DIR")?;
-    let configured_file = format!("{}/TCL_SYS_CONFIGURED", out_dir);
-
-    if Path::new(&configured_file).exists() {
+    if token_exists() {
         return Ok(());
     }
+    token_touch()?;
 
-    drop(File::create(configured_file)?);
-
+    let out_dir = env::var("OUT_DIR")?;
     let work_dir = "tcl8.6.12/unix";
     let command = fs::canonicalize(format!("{}/{}/configure", out_dir, work_dir))?;
     eprintln!("canonicsed");
