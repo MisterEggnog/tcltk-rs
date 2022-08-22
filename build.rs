@@ -35,6 +35,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         build_unix()?
     }
 
+    bindgen();
+
     Ok(())
 }
 
@@ -83,7 +85,9 @@ fn configure_unix() -> anyhow::Result<()> {
 
     let out_dir = env::var("OUT_DIR")?;
     let work_dir = "tcl8.6.12/unix";
-    let command = fs::canonicalize(format!("{}/{}/configure", out_dir, work_dir))?;
+    let command = fs::canonicalize(format!("{}/{}/configure", out_dir, work_dir)).expect(&format!(
+        "canonicalize failed for {out_dir}/{work_dir}/configure"
+    ));
     eprintln!("canonicsed");
     eprintln!("{:?}", command);
     let output = Command::new(command)
@@ -95,4 +99,19 @@ fn configure_unix() -> anyhow::Result<()> {
     println!("{}", String::from_utf8(output.stderr).unwrap());
 
     Ok(())
+}
+
+fn bindgen() {
+    let header: PathBuf = ["tcl8.6.12", "generic", "tcl.h"].iter().collect();
+
+    let bindings = bindgen::Builder::default()
+        .header(header.to_str().unwrap())
+        .parse_callbacks(Box::new(bindgen::CargoCallbacks))
+        .generate()
+        .expect("Unable to generate bindings");
+
+    let out_path = PathBuf::from(env::var("OUT_DIR").unwrap());
+    bindings
+        .write_to_file(out_path.join("bindings.rs"))
+        .expect("Unable to write bindings");
 }
