@@ -21,5 +21,21 @@ fn run_tests() {
         .status()
         .expect("Failed to execute process");
 
-    panic!("{:?}", env!("OUT_DIR"));
+    let test_result = Command::new("make")
+        .arg("test")
+        .current_dir(
+            [&build_dir, &tcl_dir, "unix"]
+                .iter()
+                .collect::<PathBuf>()
+                .to_str()
+                .unwrap(),
+        )
+        .output()
+        .expect("Failed to execute process");
+
+    assert!(
+        test_result.status.success(),
+        "Running make tests for tcl failed with stderr:\n{}",
+        std::str::from_utf8(&test_result.stderr).unwrap()
+    );
 }
