@@ -2,6 +2,7 @@ use std::path::PathBuf;
 use std::process::Command;
 
 #[test]
+#[ignore]
 fn run_tests() {
     let build_dir = env!("OUT_DIR");
     let tcl_dir = "tcl8.6.12";
