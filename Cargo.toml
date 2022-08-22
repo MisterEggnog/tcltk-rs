@@ -10,6 +10,7 @@ libc = "0.2"
 
 [build-dependencies]
 anyhow = "1.0"
+bindgen = { version = "0.60.1", default-features = false, features = ["runtime"] }
 jobserver = "0.1.24"
 #cc = { version = "1.0.73", features = ["parallel"] }
 pkg-config = "0.3.25"
