@@ -23,7 +23,6 @@ fn run_tests() {
         .expect("Failed to execute process");
 
     let test_result = Command::new("make")
-		.arg(format!("--jobs={}", num_cpus::get()))
         .arg("test")
         .current_dir(
             [&build_dir, &tcl_dir, "unix"]

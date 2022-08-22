@@ -13,6 +13,3 @@ anyhow = "1.0"
 jobserver = "0.1.24"
 #cc = { version = "1.0.73", features = ["parallel"] }
 pkg-config = "0.3.25"
-
-[dev-dependencies]
-num_cpus = "1.13"
