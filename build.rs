@@ -102,7 +102,7 @@ fn configure_unix() -> anyhow::Result<()> {
 }
 
 fn bindgen() {
-    let header: PathBuf = ["tcl8.6.12", "generic", "tcl.h"].iter().collect();
+    let header: PathBuf = ["src", "tcl.h"].iter().collect();
 
     let bindings = bindgen::Builder::default()
         .header(header.to_str().unwrap())
