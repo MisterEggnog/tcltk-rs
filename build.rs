@@ -27,16 +27,12 @@ fn token_touch() -> anyhow::Result<()> {
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("cargo:rerun-if-changed=build.rs");
 
-    let lib = Config::new().atleast_version("8.6").probe("tcl");
-    match lib {
-        Ok(_) => panic!("This has never worked before"),
-        Err(_) => {
-            copy_tcl_dir()?;
-            configure_unix()?;
-            token_touch()?;
+    if Config::new().atleast_version("8.6").probe("tcl").is_err() {
+        copy_tcl_dir()?;
+        configure_unix()?;
+        token_touch()?;
 
-            build_unix()?
-        }
+        build_unix()?
     }
 
     Ok(())
