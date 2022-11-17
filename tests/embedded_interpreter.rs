@@ -7,3 +7,9 @@ impl Drop for Wrapper {
         unsafe { Tcl_DeleteInterp(self.0) }
     }
 }
+
+const program: &'static str = "
+set A 6
+set B 6
+expr { $A * $B}
+";
