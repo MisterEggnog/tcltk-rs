@@ -23,4 +23,9 @@ fn use_embedded_tcl_engine() {
     };
 
     let script = CString::new(program).expect("Unable to create cstring");
+    assert_eq!(
+        unsafe { Tcl_Eval(tcl_interp.0, script.as_ptr()) },
+        TCL_OK as i32,
+        "Failed to run tcl script"
+    );
 }
