@@ -1,3 +1,4 @@
+use std::ffi::CString;
 use tcltk_sys::*;
 
 struct Wrapper(*mut Tcl_Interp);
@@ -11,7 +12,7 @@ impl Drop for Wrapper {
 const program: &'static str = "\
 set A 6
 set B 6
-expr { $A * $B}\0";
+expr { $A * $B}";
 
 #[test]
 fn use_embedded_tcl_engine() {
@@ -20,4 +21,6 @@ fn use_embedded_tcl_engine() {
         assert!(!tcl_interp.is_null());
         Wrapper(tcl_interp)
     };
+
+    let script = CString::new(program).expect("Unable to create cstring");
 }
