@@ -28,4 +28,7 @@ fn use_embedded_tcl_engine() {
         TCL_OK as i32,
         "Failed to run tcl script"
     );
+
+    let obj_result = unsafe { Tcl_GetObjResult(tcl_interp.0) };
+    assert!(!obj_result.is_null());
 }
