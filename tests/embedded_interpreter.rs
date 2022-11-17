@@ -8,11 +8,10 @@ impl Drop for Wrapper {
     }
 }
 
-const program: &'static str = "
+const program: &'static str = "\
 set A 6
 set B 6
-expr { $A * $B}
-";
+expr { $A * $B}\0";
 
 #[test]
 fn use_embedded_tcl_engine() {
