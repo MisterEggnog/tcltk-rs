@@ -38,4 +38,6 @@ fn use_embedded_tcl_engine() {
         TCL_OK as i32,
         "Contents of tcl result was not an integer"
     );
+
+    assert_eq!(result, 36);
 }
