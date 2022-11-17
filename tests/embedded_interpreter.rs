@@ -31,4 +31,11 @@ fn use_embedded_tcl_engine() {
 
     let obj_result = unsafe { Tcl_GetObjResult(tcl_interp.0) };
     assert!(!obj_result.is_null());
+
+    let mut result = 0;
+    assert_eq!(
+        unsafe { Tcl_GetIntFromObj(tcl_interp.0, obj_result, &mut result) },
+        TCL_OK as i32,
+        "Contents of tcl result was not an integer"
+    );
 }
