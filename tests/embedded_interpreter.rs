@@ -4,13 +4,13 @@ use tcltk_sys::*;
 struct Wrapper(*mut Tcl_Interp);
 
 impl Wrapper {
-	pub fn new() -> Wrapper {
-	unsafe {
-        let tcl_interp = Tcl_CreateInterp();
-        assert!(!tcl_interp.is_null());
-        Wrapper(tcl_interp)
+    pub fn new() -> Wrapper {
+        unsafe {
+            let tcl_interp = Tcl_CreateInterp();
+            assert!(!tcl_interp.is_null());
+            Wrapper(tcl_interp)
+        }
     }
-	}
 }
 
 impl Drop for Wrapper {
