@@ -1,4 +1,5 @@
 use std::error::Error;
+use std::ffi::CString;
 use std::io;
 use std::io::prelude::*;
 
@@ -13,7 +14,8 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     for line in handle.lines() {
         let command_str = line?;
-        println!("{}", command_str);
+        let script = CString::new(command_str)?;
+        println!("{:?}", script);
     }
 
     Ok(())
