@@ -8,8 +8,8 @@ mod tcl {
 
 fn main() -> Result<(), Box<dyn Error>> {
     let interpreter = tcl::Wrapper::new();
-    let ifs = io::stdin();
-    let handle = ifs.lock();
+    let stdin = io::stdin();
+    let handle = stdin.lock();
 
     for line in handle.lines() {
         let command_str = line?;
