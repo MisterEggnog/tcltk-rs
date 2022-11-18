@@ -1,10 +1,13 @@
 use std::error::Error;
 use std::io;
 use std::io::prelude::*;
-include!("../tests/embedded_interpreter.rs");
+
+mod tcl {
+    include!("../tests/embedded_interpreter.rs");
+}
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let interpreter = Wrapper::new();
+    let interpreter = tcl::Wrapper::new();
     let ifs = io::stdin();
     let handle = ifs.lock();
 
