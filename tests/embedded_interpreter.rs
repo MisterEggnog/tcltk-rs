@@ -19,7 +19,7 @@ impl Drop for Wrapper {
     }
 }
 
-const program: &'static str = "\
+const PROGRAM: &'static str = "\
 set A 6
 set B 6
 expr { $A * $B}";
@@ -28,7 +28,7 @@ expr { $A * $B}";
 fn use_embedded_tcl_engine() {
     let tcl_interp = Wrapper::new();
 
-    let script = CString::new(program).expect("Unable to create cstring");
+    let script = CString::new(PROGRAM).expect("Unable to create cstring");
     assert_eq!(
         unsafe { Tcl_Eval(tcl_interp.0, script.as_ptr()) },
         TCL_OK as i32,
