@@ -2,7 +2,7 @@ use std::error::Error;
 use std::ffi::CString;
 use std::io;
 use std::io::prelude::*;
-use tcltk_sys::{Tcl_Eval, TCL_OK};
+use tcl_sys::{Tcl_Eval, TCL_OK};
 
 mod tcl {
     include!("../tests/common/mod.rs");

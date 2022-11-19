@@ -1,4 +1,4 @@
-use tcltk_sys::*;
+use tcl_sys::*;
 pub struct Wrapper(pub *mut Tcl_Interp);
 
 impl Wrapper {

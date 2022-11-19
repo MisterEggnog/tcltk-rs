@@ -1,5 +1,5 @@
 use std::ffi::CString;
-use tcltk_sys::*;
+use tcl_sys::*;
 
 mod common;
 use common::Wrapper;
