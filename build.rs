@@ -106,6 +106,9 @@ fn bindgen() {
 
     let bindings = bindgen::Builder::default()
         .header(header.to_str().unwrap())
+        .blocklist_item("stdin")
+        .blocklist_item("stdout")
+        .blocklist_item("stderr")
         .parse_callbacks(Box::new(bindgen::CargoCallbacks))
         .generate()
         .expect("Unable to generate bindings");
