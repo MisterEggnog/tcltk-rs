@@ -2,6 +2,7 @@ use std::error::Error;
 use std::ffi::CString;
 use std::io;
 use std::io::prelude::*;
+use tcltk_sys::{Tcl_Eval, TCL_OK};
 
 mod tcl {
     include!("../tests/embedded_interpreter.rs");
@@ -15,7 +16,10 @@ fn main() -> Result<(), Box<dyn Error>> {
     for line in handle.lines() {
         let command_str = line?;
         let script = CString::new(command_str)?;
-        println!("{:?}", script);
+        assert_eq!(
+            unsafe { Tcl_Eval(interpreter.0, script.as_ptr()) },
+            TCL_OK as i32,
+        );
     }
 
     Ok(())

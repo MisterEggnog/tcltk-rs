@@ -1,7 +1,7 @@
 use std::ffi::CString;
 use tcltk_sys::*;
 
-pub struct Wrapper(*mut Tcl_Interp);
+pub struct Wrapper(pub *mut Tcl_Interp);
 
 impl Wrapper {
     pub fn new() -> Wrapper {
