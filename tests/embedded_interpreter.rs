@@ -1,23 +1,8 @@
 use std::ffi::CString;
 use tcltk_sys::*;
 
-pub struct Wrapper(pub *mut Tcl_Interp);
-
-impl Wrapper {
-    pub fn new() -> Wrapper {
-        unsafe {
-            let tcl_interp = Tcl_CreateInterp();
-            assert!(!tcl_interp.is_null());
-            Wrapper(tcl_interp)
-        }
-    }
-}
-
-impl Drop for Wrapper {
-    fn drop(&mut self) {
-        unsafe { Tcl_DeleteInterp(self.0) }
-    }
-}
+mod common;
+use common::Wrapper;
 
 const PROGRAM: &'static str = "\
 set A 6

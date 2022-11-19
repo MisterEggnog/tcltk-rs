@@ -5,7 +5,7 @@ use std::io::prelude::*;
 use tcltk_sys::{Tcl_Eval, TCL_OK};
 
 mod tcl {
-    include!("../tests/embedded_interpreter.rs");
+    include!("../tests/common/mod.rs");
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
