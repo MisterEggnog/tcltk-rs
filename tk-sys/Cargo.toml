@@ -11,4 +11,5 @@ tcl-sys = { version = "0.1.0", path = ".." }
 x11 = "2.20.0"
 
 [build-dependencies]
+bindgen = { version = "0.62.0", default-features = false, features = ["runtime"] }
 pkg-config = "0.3.26"
