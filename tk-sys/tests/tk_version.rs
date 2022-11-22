@@ -16,9 +16,13 @@ fn return_code(code: u32) -> &'static str {
     }
 }
 
+fn get_result_str<'a>(interp: &'a mut Wrapper) -> &'a CStr {
+    unsafe { CStr::from_ptr(Tcl_GetString(Tcl_GetObjResult(interp.0))) }
+}
+
 #[test]
 fn tk_is_expected_version() {
-    let interpreter = Wrapper::new();
+    let mut interpreter = Wrapper::new();
     assert_eq!(
         unsafe { Tk_Init(interpreter.0 as *mut tk_sys::Tcl_Interp) },
         TCL_OK as i32
@@ -30,6 +34,6 @@ fn tk_is_expected_version() {
         interp_result,
         TCL_OK as i32,
         "Failed to run script, return error: {return_code}, reason: {:?}",
-        unsafe { CStr::from_ptr(Tcl_GetString(Tcl_GetObjResult(interpreter.0))) }
+        get_result_str(&mut interpreter)
     );
 }
