@@ -41,4 +41,9 @@ fn set_library_path() {
         .expect("Failed to open stdin")
         .write_all("puts $tcl_library".as_bytes())
         .expect("Failed to write to stdin");
+
+    let output = child_tclsh
+        .wait_with_output()
+        .expect("Failed to read stdout");
+    let output = String::from_utf8(output.stdout).unwrap();
 }
