@@ -1,5 +1,6 @@
 use std::ffi::{CStr, CString};
 use tcl_sys::*;
+use tk_sys::Tk_Init;
 
 mod common;
 use common::Wrapper;
@@ -18,6 +19,10 @@ fn return_code(code: u32) -> &'static str {
 #[test]
 fn tk_is_expected_version() {
     let interpreter = Wrapper::new();
+    assert_eq!(
+        unsafe { Tk_Init(interpreter.0 as *mut tk_sys::Tcl_Interp) },
+        TCL_OK as i32
+    );
     let script = CString::new("package require Tk").expect("Unable to convert string to cstring");
     let interp_result = unsafe { Tcl_Eval(interpreter.0, script.as_ptr()) };
     let return_code = return_code(interp_result.try_into().unwrap());
