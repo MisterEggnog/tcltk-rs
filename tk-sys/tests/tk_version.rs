@@ -24,7 +24,9 @@ fn source_library(interp: &mut Wrapper) {
     let script = CString::new("source [file join [info library] init.tcl]").unwrap();
     assert_eq!(
         unsafe { Tcl_Eval(interp.0, script.as_ptr()) },
-        TCL_OK as i32
+        TCL_OK as i32,
+        "{:?}",
+        get_result_str(interp)
     );
 }
 
