@@ -4,7 +4,7 @@ use std::path::PathBuf;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("cargo:rerun-if-changed=build.rs");
-    Config::new().atleast_version("8.6").probe("tcl")?;
+    Config::new().atleast_version("8.6").probe("tk")?;
 
     let bindings = bindgen::Builder::default()
         .header("src/tk.h")
