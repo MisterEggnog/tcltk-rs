@@ -13,7 +13,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .generate()
         .expect("Unable to generate bindings");
 
-    println!("cargo:rerun-if-changed=src/tcl.h");
     let out_path = PathBuf::from(env::var("OUT_DIR").unwrap());
     bindings
         .write_to_file(out_path.join("bindings.rs"))
