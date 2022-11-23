@@ -1,19 +1,2 @@
-[package]
-name = "tcl-sys"
-version = "0.1.0"
-edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [workspace]
-members = ["tk-sys"]
-
-[dependencies]
-libc = "0.2.137"
-
-[build-dependencies]
-anyhow = "1.0.66"
-bindgen = { version = "0.63.0", default-features = false, features = ["runtime"] }
-jobserver = "0.1.25"
-#cc = { version = "1.0.73", features = ["parallel"] }
-pkg-config = "0.3.26"
+members = ["tcl-sys", "tk-sys"]

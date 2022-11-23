@@ -1,5 +1,5 @@
 [package]
-name = "tk-sys"
+name = "tcl-sys"
 version = "0.1.0"
 edition = "2021"
 
@@ -7,9 +7,10 @@ edition = "2021"
 
 [dependencies]
 libc = "0.2.137"
-tcl-sys = { version = "0.1.0", path = "../tcl-sys" }
-x11 = "2.20.0"
 
 [build-dependencies]
+anyhow = "1.0.66"
 bindgen = { version = "0.63.0", default-features = false, features = ["runtime"] }
+jobserver = "0.1.25"
+#cc = { version = "1.0.73", features = ["parallel"] }
 pkg-config = "0.3.26"
