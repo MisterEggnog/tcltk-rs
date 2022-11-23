@@ -46,4 +46,6 @@ fn set_library_path() {
         .wait_with_output()
         .expect("Failed to read stdout");
     let output = String::from_utf8(output.stdout).unwrap();
+
+    println!("cargo:rustc-env=tcl_library={}", output);
 }
