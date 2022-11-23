@@ -34,14 +34,14 @@ fn source_library(interp: &mut Wrapper) {
 fn tk_is_expected_version() {
     let mut interpreter = Wrapper::new();
 
-    source_library(&mut interpreter);
+    //source_library(&mut interpreter);
 
-    assert_eq!(
+    /*assert_eq!(
         unsafe { Tk_Init(interpreter.0 as *mut tk_sys::Tcl_Interp) },
         TCL_OK as i32,
         "{:?}",
         get_result_str(&mut interpreter)
-    );
+    );*/
 
     let script = CString::new("package require Tk").expect("Unable to convert string to cstring");
     let interp_result = unsafe { Tcl_Eval(interpreter.0, script.as_ptr()) };
