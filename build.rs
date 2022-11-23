@@ -40,7 +40,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     bindgen();
 
-    set_library_path();
+    set_library_path("tclsh", "TCL_LIBRARY");
 
     Ok(())
 }

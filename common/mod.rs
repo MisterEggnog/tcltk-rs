@@ -1,7 +1,8 @@
+use std::ffi::OsStr;
 use std::io::Write;
 use std::process::{Command, Stdio};
 
-pub fn set_library_path() {
+pub fn set_library_path<S: AsRef<OsStr>>(shell: S, env_name: S) {
     // The only way I know how to find this is to invoke tcl & check it's
     // output
     let mut child_tclsh = Command::new("/usr/bin/env")
