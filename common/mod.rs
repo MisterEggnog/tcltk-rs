@@ -16,7 +16,7 @@ pub fn set_library_path(shell: &str, env_name: &str) {
         .stdin
         .take()
         .expect("Failed to open stdin")
-        .write_all(format!("puts ${}", env_name.to_lowercase()).as_bytes())
+        .write_all(format!("puts ${}\nexit", env_name.to_lowercase()).as_bytes())
         .expect("Failed to write to stdin");
 
     let output = child_tclsh
