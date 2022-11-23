@@ -21,22 +21,10 @@ fn get_result_str<'a>(interp: &'a mut Wrapper) -> &'a CStr {
     unsafe { CStr::from_ptr(Tcl_GetString(Tcl_GetObjResult(interp.0))) }
 }
 
-fn source_library(interp: &mut Wrapper) {
-    let script = CString::new("source [file join [info library] init.tcl]").unwrap();
-    assert_eq!(
-        unsafe { Tcl_Eval(interp.0, script.as_ptr()) },
-        TCL_OK as i32,
-        "{:?}",
-        get_result_str(interp)
-    );
-}
-
 #[test]
 fn tk_is_expected_version() {
     set_var("TK_LIBRARY", tk_sys::TK_LIBRARY);
     let mut interpreter = Wrapper::new();
-
-    source_library(&mut interpreter);
 
     assert_eq!(
         unsafe { Tk_Init(interpreter.0 as *mut tk_sys::Tcl_Interp) },
