@@ -4,4 +4,4 @@
 
 include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
 
-pub const TCL_LIBRARY: &str = env!("TCL_LIBRARY");
+pub const TK_LIBRARY: &str = env!("TK_LIBRARY");
