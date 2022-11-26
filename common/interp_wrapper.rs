@@ -6,7 +6,7 @@ pub struct Wrapper(pub *mut Tcl_Interp);
 impl Wrapper {
     pub fn new() -> Wrapper {
         unsafe {
-            set_var("TCL_LIBRARY", TCL_LIBRARY);
+            init_library();
             let tcl_interp = Tcl_CreateInterp();
             Tcl_Init(tcl_interp);
             assert!(!tcl_interp.is_null());
