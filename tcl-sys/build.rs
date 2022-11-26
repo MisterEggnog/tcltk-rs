@@ -6,9 +6,6 @@ use std::fs::File;
 use std::path::{Path, PathBuf};
 use std::process::Command;
 
-mod common;
-use common::*;
-
 fn token_name() -> PathBuf {
     [
         env::var("OUT_DIR").unwrap(),
@@ -40,7 +37,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     bindgen();
 
-    set_library_path("tclsh", "TCL_LIBRARY");
 
     Ok(())
 }
