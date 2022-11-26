@@ -4,4 +4,11 @@
 
 include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
 
-pub const TCL_LIBRARY: &str = env!("TCL_LIBRARY");
+mod find_lib;
+use std::env::{var, VarError};
+
+pub fn init_library() {
+    if let Err(VarError::NotPresent) = var("TCL_LIBRARY") {
+        find_lib::set_library_path("tclsh", "TCL_LIBRARY");
+    }
+}

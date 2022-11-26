@@ -1,3 +1,4 @@
+use std::env::set_var;
 use std::ffi::OsStr;
 use std::io::Write;
 use std::process::{Command, Stdio};
@@ -25,4 +26,5 @@ pub fn set_library_path(shell: &str, env_name: &str) {
     let output = String::from_utf8(output.stdout).unwrap();
 
     println!("cargo:rustc-env={}={}", env_name.to_uppercase(), output);
+    set_var(env_name.to_uppercase(), output);
 }
