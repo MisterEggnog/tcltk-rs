@@ -1,4 +1,3 @@
-use std::env::set_var;
 use std::ffi::{CStr, CString};
 use tcl_sys::*;
 use tk_sys::Tk_Init;
@@ -23,7 +22,6 @@ fn get_result_str<'a>(interp: &'a mut Wrapper) -> &'a CStr {
 
 #[test]
 fn tk_is_expected_version() {
-    set_var("TK_LIBRARY", tk_sys::TK_LIBRARY);
     let mut interpreter = Wrapper::new();
 
     assert_eq!(
