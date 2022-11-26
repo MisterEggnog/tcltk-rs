@@ -2,9 +2,6 @@ use pkg_config::Config;
 use std::env;
 use std::path::PathBuf;
 
-mod common;
-use common::*;
-
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("cargo:rerun-if-changed=build.rs");
     Config::new().atleast_version("8.6").probe("tk")?;
@@ -20,8 +17,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     bindings
         .write_to_file(out_path.join("bindings.rs"))
         .expect("Unable to write bindings");
-
-    set_library_path("wish", "TK_LIBRARY");
 
     Ok(())
 }
