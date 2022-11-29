@@ -39,7 +39,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
     };
 
-    bindgen();
+    bindgen(&include_paths);
 
     Ok(())
 }
@@ -105,7 +105,7 @@ fn configure_unix() -> anyhow::Result<()> {
     Ok(())
 }
 
-fn bindgen() {
+fn bindgen(include_dir: &[PathBuf]) {
     let header: PathBuf = ["src", "defs.h"].iter().collect();
 
     let bindings = bindgen::Builder::default()
@@ -113,6 +113,11 @@ fn bindgen() {
         .blocklist_item("stdin")
         .blocklist_item("stdout")
         .blocklist_item("stderr")
+        .clang_args(
+            include_dir
+                .iter()
+                .flat_map(|dir| vec!["-I", dir.to_str().unwrap()]),
+        )
         .parse_callbacks(Box::new(bindgen::CargoCallbacks))
         .generate()
         .expect("Unable to generate bindings");
