@@ -4,11 +4,18 @@ use std::path::PathBuf;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("cargo:rerun-if-changed=build.rs");
-    Config::new().atleast_version("8.6").probe("tk")?;
+    let include_paths = Config::new()
+        .atleast_version("8.6")
+        .probe("tk")?
+        .include_paths;
 
     let bindings = bindgen::Builder::default()
         .header("src/tk.h")
-        .clang_args(["-I", "/usr/include/tcl"])
+        .clang_args(
+            include_paths
+                .iter()
+                .flat_map(|dir| vec!["-I", dir.to_str().unwrap()]),
+        )
         .parse_callbacks(Box::new(bindgen::CargoCallbacks))
         .generate()
         .expect("Unable to generate bindings");
