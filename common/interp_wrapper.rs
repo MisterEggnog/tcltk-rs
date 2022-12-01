@@ -1,4 +1,3 @@
-use std::env::set_var;
 use tcl_sys::*;
 
 pub struct Wrapper(pub *mut Tcl_Interp);
