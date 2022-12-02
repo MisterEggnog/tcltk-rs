@@ -1,2 +1,10 @@
 [workspace]
 members = ["tcl-sys", "tk-sys"]
+
+[workspace.package]
+authors = ["Baldwin, Josiah <jbaldwin@nwvariancesoftware.dev>"]
+edition = "2021"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/MisterEggnog/tcltk-rs"
+homepage = "https://github.com/MisterEggnog/tcltk-rs"
+version = "0.1.0"
