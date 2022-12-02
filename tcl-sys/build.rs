@@ -113,6 +113,7 @@ fn bindgen(include_dir: &[PathBuf]) {
         .blocklist_item("stdin")
         .blocklist_item("stdout")
         .blocklist_item("stderr")
+        .opaque_type("Tcl_Interp")
         .clang_args(
             include_dir
                 .iter()
