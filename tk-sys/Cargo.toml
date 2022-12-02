@@ -8,7 +8,7 @@ edition = "2021"
 [dependencies]
 libc = "0.2.137"
 tcl-sys = { version = "0.1.0", path = "../tcl-sys" }
-x11 = "2.20.0"
+x11 = "2.20.1"
 
 [build-dependencies]
 bindgen = { version = "0.63.0", default-features = false, features = ["runtime"] }
