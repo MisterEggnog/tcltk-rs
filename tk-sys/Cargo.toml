@@ -1,5 +1,7 @@
 [package]
 name = "tk-sys"
+documentation = "https://docs.rs/tk_sys/0.1.0/"
+description = "bindings to Tk graphics library"
 authors.workspace = true
 edition.workspace = true
 license.workspace = true
