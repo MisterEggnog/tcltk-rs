@@ -27,6 +27,11 @@ fn token_touch() -> anyhow::Result<()> {
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("cargo:rerun-if-changed=build.rs");
 
+    if std::env::var("DOCS_RS").is_ok() {
+        bindgen(&["tcl8.6.12/generic"].map(|f| PathBuf::from(f)));
+        return Ok(());
+    }
+
     let include_paths = match Config::new().atleast_version("8.6").probe("tcl") {
         Ok(lib) => lib.include_paths,
         Err(_) => {
