@@ -1,5 +1,6 @@
 [package]
 name = "tk-sys"
+links = "tk"
 documentation = "https://docs.rs/tk_sys/0.1.0/"
 description = "bindings to Tk graphics library"
 categories = ["graphics", "gui", "compilers", "external-ffi-bindings"]
