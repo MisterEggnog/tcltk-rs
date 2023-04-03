@@ -17,7 +17,7 @@ version.workspace = true
 
 [dependencies]
 libc = "0.2.140"
-tcl-sys = { version = "0.1.0", path = "../tcl-sys" }
+tcl-sys = { version = "0.2.0-alpha", path = "../tcl-sys" }
 x11 = "2.21.0"
 
 [build-dependencies]

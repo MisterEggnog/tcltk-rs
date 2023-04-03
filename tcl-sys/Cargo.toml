@@ -1,7 +1,7 @@
 [package]
 name = "tcl-sys"
 links = "tcl"
-documentation = "https://docs.rs/tcl_sys/0.1.0/"
+documentation = "https://docs.rs/tcl_sys/0.2.0/"
 description = "rust bindings for the tcl interpreter library"
 categories = ["compilers", "external-ffi-bindings"]
 keywords = ["bindings", "tcl", "script", "scripting"]
