@@ -5,6 +5,7 @@ documentation = "https://docs.rs/tcl_sys/0.2.0/"
 description = "rust bindings for the tcl interpreter library"
 categories = ["compilers", "external-ffi-bindings"]
 keywords = ["bindings", "tcl", "script", "scripting"]
+include = ["src", "tests", "examples", "build.rs", "tcl8.6"]
 authors.workspace = true
 edition.workspace = true
 license.workspace = true
