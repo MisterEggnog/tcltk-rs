@@ -4,11 +4,14 @@ use std::path::PathBuf;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("cargo:rerun-if-changed=build.rs");
-    println!(
-        "cargo:warning={}",
-        env::var("DEP_TCL_LOCAL_INCLUDE_DIR")
-            .unwrap_or("DEP_TCL_LOCAL_INCLUDE_DIR env var not found".to_string())
-    );
+    let tcl_local = env::var("DEP_TCL_LOCAL_INCLUDE_DIR")
+        .unwrap_or("DEP_TCL_LOCAL_INCLUDE_DIR env var not found".to_string());
+    println!("cargo:warning={}", &tcl_local);
+    if std::env::var("DOCS_RS").is_ok() {
+        do_bindgen(&[&tcl_local, "tk8.6/generic"].map(|f| PathBuf::from(f)));
+        return Ok(());
+    }
+
     let include_paths = Config::new()
         .atleast_version("8.6")
         .probe("tk")?
