@@ -14,10 +14,16 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .probe("tk")?
         .include_paths;
 
+    do_bindgen(&include_paths);
+
+    Ok(())
+}
+
+fn do_bindgen(includes: &[PathBuf]) {
     let bindings = bindgen::Builder::default()
         .header("src/tk.h")
         .clang_args(
-            include_paths
+            includes
                 .iter()
                 .flat_map(|dir| vec!["-I", dir.to_str().unwrap()]),
         )
@@ -29,6 +35,4 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     bindings
         .write_to_file(out_path.join("bindings.rs"))
         .expect("Unable to write bindings");
-
-    Ok(())
 }
