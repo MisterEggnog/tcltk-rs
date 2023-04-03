@@ -6,8 +6,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("cargo:rerun-if-changed=build.rs");
     println!(
         "cargo:warning={}",
-        env::var("TCL_LOCAL_INCL_DIR")
-            .unwrap_or("TCL_LOCAL_INCL_DIR env var not found".to_string())
+        env::var("DEP_TCL_LOCAL_INCLUDE_DIR")
+            .unwrap_or("DEP_TCL_LOCAL_INCLUDE_DIR env var not found".to_string())
     );
     let include_paths = Config::new()
         .atleast_version("8.6")

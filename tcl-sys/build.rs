@@ -26,6 +26,7 @@ fn token_touch() -> anyhow::Result<()> {
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("cargo:rerun-if-changed=build.rs");
+    println!("cargo:LOCAL_INCLUDE_DIR=5");
 
     if std::env::var("DOCS_RS").is_ok() {
         bindgen(&["tcl8.6.12/generic"].map(|f| PathBuf::from(f)));
