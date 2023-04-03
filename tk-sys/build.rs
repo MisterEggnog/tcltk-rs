@@ -8,7 +8,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .unwrap_or("DEP_TCL_LOCAL_INCLUDE_DIR env var not found".to_string());
     println!("cargo:warning={}", &tcl_local);
     if std::env::var("DOCS_RS").is_ok() {
-        do_bindgen(&[&tcl_local, "tk8.6/generic"].map(|f| PathBuf::from(f)));
+        do_bindgen(&[&tcl_local, "tk8.6/generic"].map(PathBuf::from));
         return Ok(());
     }
 
