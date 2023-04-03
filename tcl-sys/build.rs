@@ -28,11 +28,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("cargo:rerun-if-changed=build.rs");
     let include_dir = env::current_dir()
         .unwrap()
-        .join(PathBuf::from("tcl8.6.12/generic"));
+        .join(PathBuf::from("tcl8.6/generic"));
     println!("cargo:LOCAL_INCLUDE_DIR={}", include_dir.to_string_lossy());
 
     if std::env::var("DOCS_RS").is_ok() {
-        bindgen(&["tcl8.6.12/generic"].map(|f| PathBuf::from(f)));
+        bindgen(&["tcl8.6/generic"].map(|f| PathBuf::from(f)));
         return Ok(());
     }
 
@@ -60,7 +60,7 @@ fn copy_tcl_dir() -> anyhow::Result<()> {
 
     let out_dir = env::var("OUT_DIR")?;
     Command::new("cp")
-        .args(["-Rf", "tcl8.6.12/", &out_dir])
+        .args(["-Rf", "tcl8.6/", &out_dir])
         .status()
         .expect("Failed to execute process");
 
@@ -69,7 +69,7 @@ fn copy_tcl_dir() -> anyhow::Result<()> {
 
 fn build_unix() -> anyhow::Result<()> {
     let out_dir = env::var("OUT_DIR")?;
-    let work_dir = "tcl8.6.12/unix";
+    let work_dir = "tcl8.6/unix";
     eprintln!("{}", out_dir);
     let jobserver = unsafe { Client::from_env().unwrap() };
 
@@ -97,7 +97,7 @@ fn configure_unix() -> anyhow::Result<()> {
     }
 
     let out_dir = env::var("OUT_DIR")?;
-    let work_dir = "tcl8.6.12/unix";
+    let work_dir = "tcl8.6/unix";
     let command = fs::canonicalize(format!("{}/{}/configure", out_dir, work_dir)).expect(&format!(
         "canonicalize failed for {out_dir}/{work_dir}/configure"
     ));
